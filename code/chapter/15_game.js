@@ -15,7 +15,6 @@ function Level(plan) {
   this.height = plan.length;
   this.grid = [];
   this.actors = [];
-   alert("%f",width);
   for (var y = 0; y < this.height; y++) {
     var line = plan[y], gridLine = [];
     for (var x = 0; x < this.width; x++) {
@@ -300,7 +299,7 @@ Level.prototype.playerTouched = function(type, actor) {
 var arrowCodes = {37: "left", 38: "up", 39: "right"};
 
 function trackKeys(codes) {
-  var pressed = Object.create(null);
+  var pressed = Object.create(null); 
   function handler(event) {
     if (codes.hasOwnProperty(event.keyCode)) {
       var down = event.type == "keydown";
@@ -367,8 +366,9 @@ function runGame(plans, Display) {
       if (status == "lost")
       {
         life--;
-        alert("You have only " + life + " chance!");
-        if(life > 0)
+        if(life>=0){
+        alert("You have only " + life + " chance!");}
+        if(life >=0 )
         {
             startLevel(n);
         }
