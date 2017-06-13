@@ -5,8 +5,19 @@
 <link rel="stylesheet" href="css/game.css">
 
 <body>
+
+
+<SCRIPT LANGUAGE="JavaScript"> 
+		document.write("Wlcome to  my world<br>User:");
+        document.write(decodeURIComponent(location.search.substr(5))); 
+
+    </SCRIPT> <br>
+	<input type="button" id="look" value="Score" onclick="check()"/>
+
+
+
   <script>
-    runGame(GAME_LEVELS, DOMDisplay);
+    runGame(GAME_LEVELS, DOMDisplay,decodeURIComponent(location.search.substr(5)));
   </script>
     <embed name="CS1494228913217" src="bgm.mp3" loop="true" autostart="false" hidden="true" width="0" height="0" enablejavascript="true">
     </embed>

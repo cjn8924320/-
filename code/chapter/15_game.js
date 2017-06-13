@@ -9,7 +9,7 @@ var simpleLevelPlan = [
   "      xxxxxxxxxxxxxx  ",
   "                      "
 ];
-
+var num = 0;
 function Level(plan) {
   this.width = plan[0].length;
   this.height = plan.length;
@@ -284,6 +284,7 @@ Level.prototype.playerTouched = function(type, actor) {
     this.status = "lost";
     this.finishDelay = 1;
   } else if (type == "coin") {
+    num++;
     this.actors = this.actors.filter(function(other) {
       return other != actor;
     });
@@ -359,7 +360,36 @@ function runLevel(level, Display, andThen) {
   });
 }
 
-function runGame(plans, Display) {
+var nam;
+var xxx=12;
+var shuju;
+var ll;
+var date;
+
+
+
+function getNowFormatDate() {
+    date = new Date();
+    var seperator1 = "-";
+    var seperator2 = ":";
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+        month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+    }
+    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + " " + date.getHours() + seperator2 + date.getMinutes()
+            + seperator2 + date.getSeconds();
+    return currentdate;
+}
+
+
+
+function runGame(plans, Display,na) {
+   nam=na;
   var life = 3;
   function startLevel(n) {
     runLevel(new Level(plans[n]), Display, function(status) {
@@ -376,8 +406,23 @@ function runGame(plans, Display) {
         {
             alert("Game Over!");
             startLevel(0);
-        }
-      }
+            shuju = new Array();//保存数据
+        for(var ii=0;ii<localStorage.length;ii++){
+        if(localStorage.key(ii)=="paihang")
+        break;
+     }
+     if(ii>=localStorage.length){
+       shuju[0]={id: 0,name: nam, price:(n+1)*num,date:getNowFormatDate() };    
+      localStorage.setItem("paihang",JSON.stringify(shuju));
+     }
+     else{
+      shuju=JSON.parse(localStorage.getItem("paihang"));
+      ll=shuju.length;
+      shuju[ll]={id: ll,name: nam, price:(n+1)*num,date:getNowFormatDate() };   
+      localStorage.setItem("paihang",JSON.stringify(shuju));
+     }paiming();
+      //check();}
+      }}
       else if (n < plans.length - 1)
         startLevel(n + 1);
       else
@@ -385,4 +430,34 @@ function runGame(plans, Display) {
     });
   }
   startLevel(0);
+}
+function check(){
+  window.location.href="paihangbang.html";
+}
+function paiming(){
+  window.location.href="ok.html";
+}
+function chayong(){
+var temp;
+  sj=JSON.parse(localStorage.getItem("paihang"));
+  for(var i=0;i<sj.length;i++){
+    for(var j=0;j<sj.length-1;j++){
+      if(sj[j+1].price>sj[j].price){
+        temp=sj[j];
+        sj[j]=sj[j+1];
+        sj[j+1]=temp;
+        }
+    }
+  }
+
+  for(var q=0;q<10||sj.length;q++){
+
+  document.getElementById("table-body").rows[q].cells[1].innerHTML=sj[q].name;
+  document.getElementById("table-body").rows[q].cells[2].innerHTML=sj[q].price;
+  document.getElementById("table-body").rows[q].cells[3].innerHTML=sj[q].date;
+  }
+}
+function lookshuju(){
+  shuju=JSON.parse(localStorage.getItem("shuju"));
+  return shuju;
 }
